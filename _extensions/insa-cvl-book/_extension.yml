@@ -29,12 +29,7 @@ contributes:
       documentclass: scrreprt
       fig-format: pdf
       default-image-extension: pdf
-      include-in-header: preamble.tex
       classoption: ['openright','twoside']
-      sansfont: Calibri
-      sansfontoptions: [Scale=MatchLowercase,Scale=1.1]
-      polyglossia-otherlangs:
-        - name: english
       toc-depth: 2
       papersize: a4
       fontsize: 12pt
