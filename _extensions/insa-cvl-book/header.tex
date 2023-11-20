@@ -1,0 +1,155 @@
+
+\renewcommand{\UrlFont}{\ttfamily\smaller}
+% columun %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{cols}[1][]{}{}
+\let\columns\cols
+\let\endcolumns\endcols
+\newenvironment{col}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\let\column\col
+\let\endcolumn\endcol
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {\hfill}%
+}
+
+% itemize/enumerate%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% •‣ ■
+\setlist{noitemsep,nosep,leftmargin=*}
+\setlist[1]{labelindent=\parindent,topsep=-5pt,partopsep=0pt} % < Usually a good idea
+%\setlist[enumerate]{leftmargin=1ex}
+%\setlist[itemize]{leftmargin=1em}
+\setlist[itemize,1]{label={\relsize{-2}\faIcon[regular]{square}}}
+\setlist[itemize,2]{label={\relsize{-3}\faIcon[regular]{circle}}}
+\setlist[itemize,3]{label={\relsize{-2}\faIcon[solid]{chevron-right}}}
+\setlist[description,1]{style=nextline,font=\smaller,topsep=0.125\baselineskip,parsep=0.5\baselineskip,}
+
+
+\usepackage{amsthm}
+\newtheorem{criteria}{Critère}[chapter]
+
+% chapter  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \cleardoublepage
+
+%\pagestyle{empty}
+\renewcommand\thechapter{\@Roman\c@chapter}
+\def\@makechapterhead#1{%%
+  \bgroup{
+  \parindent\z@\raggedleft\normalfont
+    \interlinepenalty\@M
+    \parbox[b]{\textwidth-2cm}{\hfill{
+      \ifnum\c@secnumdepth >\m@ne{\bfseries\LARGE\thechapter.~\textcolor{gray}{\rule[-0.5em]{2pt}{1.75em}}~}\fi\
+      {\sffamily\bfseries\LARGE\scshape#1\hskip1em}}\par
+      \rule{\linewidth}{2pt}}%
+    \par\nobreak
+  \vskip 10\p@
+  \chaptermark{#1}%
+  }\egroup
+}
+\def\@makeschapterhead#1{%
+  \bgroup{
+  \parindent\z@\raggedleft\normalfont
+    \interlinepenalty\@M
+    {\sffamily\bfseries\LARGE\scshape#1\hskip1em}\par
+      \rule{\textwidth-2cm}{1.4pt}%
+      \par\nobreak
+    \vskip 40\p@
+  }\egroup
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\footnotesize Chap.\,\thechapter\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\footnotesize\thesection\ #1}}
+
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.5\baselineskip,afterskip=0.25\baselineskip]{section}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.33\baselineskip,afterskip=0.25\baselineskip]{subsection}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.25\baselineskip,afterskip=1sp]{subsubsection}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.15\baselineskip,afterskip=0.15\baselineskip]{paragraph}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.01\baselineskip,afterskip=0.01\baselineskip,font=\normalfont\itshape]{subparagraph}
+
+
+% Figure  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{3}
+\setcounter{totalnumber}{4}
+
+% longtable patch
+\makeatletter
+\def\LT@start{%
+  \let\LT@start\endgraf
+  \endgraf\penalty\z@\vskip\LTpre\endgraf
+   \ifdim \pagetotal<\pagegoal \else
+      \dimen@=\pageshrink
+      \advance \dimen@ 1sp %
+      \kern\dimen@\penalty 9999\endgraf \kern-\dimen@
+   \fi
+  \dimen@\pagetotal
+  \advance\dimen@ \ht\ifvoid\LT@firsthead\LT@head\else\LT@firsthead\fi
+  \advance\dimen@ \dp\ifvoid\LT@firsthead\LT@head\else\LT@firsthead\fi
+  \advance\dimen@ \ht\LT@foot
+  \edef\LT@reset@vfuzz{\vfuzz\the\vfuzz\vbadness\the\vbadness\relax}%
+  \vfuzz\maxdimen
+  \vbadness\@M
+  \setbox\tw@\copy\z@
+  \setbox\tw@\vsplit\tw@ to \ht\@arstrutbox
+  \setbox\tw@\vbox{\unvbox\tw@}%
+  \LT@reset@vfuzz
+  \advance\dimen@ \ht
+        \ifdim\ht\@arstrutbox>\ht\tw@\@arstrutbox\else\tw@\fi
+  \advance\dimen@\dp
+        \ifdim\dp\@arstrutbox>\dp\tw@\@arstrutbox\else\tw@\fi
+  \advance\dimen@ -\pagegoal
+  \ifdim \dimen@>\z@
+    \vfil\break
+  \else
+    \ifdim\pageshrink>\z@\pageshrink\z@\fi
+  \fi
+      \global\@colroom\@colht
+  \ifvoid\LT@foot\else
+    %\global\advance\vsize-\ht\LT@foot
+    \global\advance\@colroom-\ht\LT@foot
+    \dimen@\pagegoal\advance\dimen@-\ht\LT@foot\pagegoal\dimen@
+    \maxdepth\z@
+  \fi
+  \ifvoid\LT@firsthead\copy\LT@head\else\box\LT@firsthead\fi\nobreak
+  \output{\LT@output}}
+
+\def\LT@output{%
+  \ifnum\outputpenalty <-\@Mi
+    \ifnum\outputpenalty > -\LT@end@pen
+      \LT@err{floats and marginpars not allowed in a longtable}\@ehc
+    \else
+      \setbox\z@\vbox{\unvbox\@cclv}%
+      \ifdim \ht\LT@lastfoot>\ht\LT@foot
+        \dimen@\pagegoal
+        \advance\dimen@\ht\LT@foot
+        \advance\dimen@-\ht\LT@lastfoot
+        \ifdim\dimen@<\ht\z@
+          \setbox\@cclv\vbox{\unvbox\z@\copy\LT@foot\vss}%
+          \@makecol
+          \@outputpage
+          \global\vsize\@colroom
+          \setbox\z@\vbox{\box\LT@head}%
+        \fi
+      \fi
+        \unvbox\z@\box\ifvoid\LT@lastfoot\LT@foot\else\LT@lastfoot\fi
+    \fi
+  \else
+    \setbox\@cclv\vbox{\unvbox\@cclv\copy\LT@foot\vss}%
+    \@makecol
+    \@outputpage
+      \global\vsize\@colroom
+    \copy\LT@head\nobreak
+  \fi}
+\makeatother

@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: _book/
+
+lang: fr
+author:
+  - name: "David FOLIO"
+  - email: "david.folio@insa-cvl.fr"
+  - affiliation: "INSA Centre Val de Loire"
+formation:
+  year: "4^ème^ année"
+  name: "Maîtrise des Risques Industriels"
+  option: "EA Système Avancé"
+  short: "4A MRI, EA SA"
+
+callout-appearance: simple
+
+book:
+  output-file: "my-book"
+  title: "Book title"
+  genre: "Support de cours"
+  author: "David FOLIO"
+  original-author: "David Folio"
+  issued: "2023"
+  date: last-modified
+  chapters:
+    - index.qmd
+  appendices:
+    - references.qmd
+
+bibliography: references.bib
+nocite: |
+  @*
+
+format:
+  insa-cvl-book-pdf: default
