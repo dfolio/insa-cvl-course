@@ -1,88 +1,58 @@
 
-\makeatletter
+\usepackage{framed}
 
-\makeatother
 \newcommand\titlegraphic[1]{\def\inserttitlegraphic{#1}}
 \titlegraphic{}
-\providecommand\subject[1]{\hypersetup{pdfsubject={#1}}}
 
-% Titlepage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand\maketitle{
-\thispagestyle{empty}
-\begin{titlepage}%
-\null%\vfil
-\begin{center}%
-  \sffamily
-  \includegraphics[width=.99\linewidth-4pt]{images/pagetitre_head}
-  \vskip.5em plus.5em minus.5em
-  $if(formation)$
-  $for(formation)$
-  {\Large\bfseries
-  \textsc{$if(formation.year)$$formation.year$$endif$
-  $if(formation.name)$$formation.name$$if(formation.option)$\newline$formation.option$$endif$
-  $else$
-  $if(formation)$$formation$$endif$
-  $endif$}\\[1em]
-  }
-  $endfor$
-  \par\nobreak\vskip2em plus1fill
-  $endif$
-  \setlength{\fboxsep}{2em}
-  \begin{framed}
-  %\shadowbox{
-  \begin{minipage}{.8\textwidth}
-  \centering\huge
-  $if(genre)$$genre$\\[1em]$endif$
-  \textsc{\@title}
-  \end{minipage}
-  \end{framed}
-  $if(titlegraphic)$
-  \includegraphics[width=.99\linewidth-4pt]{$titlegraphic$}
-  $endif$
-  \par\nobreak\vskip2em plus1fill
-  \hrule\par\nobreak
-  {\textcopyright \theyear, \@author$if(institute)$, $institute$$endif$, \faIcon[solid]{creative-commons-by}}}
-  \vskip.5em plus.5em minus.5em
-\end{center}
-\vfil\null
-\end{titlepage}
-}
+% titlepage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setkomafont{formation}{\large\bfseries}
+\addtokomafont{subject}{\sffamily}
+\addtokomafont{title}{\scshape}
+\setkomafont{author}{\large}
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[LE,RO]{\bfseries\thepage}
-\fancyhead[RE]{\footnotesize\leftmark}
-\fancyhead[LO]{\footnotesize\rightmark}
-\fancyfoot[LO,RE]{\footnotesize\sffamily\smaller\textcolor{gray!80}{\textcopyright \theyear, \@author$if(institute)$, $institute$$endif$, \faIcon[solid]{creative-commons-by}}}
-\fancyfoot[LE,RO]{\footnotesize\sffamily$if(formation)$
-$if(formation.short)$$formation.short$
-$else$
-$if(formation.footer)$$formation.footer$$else$
-$if(formation.name)$$formation.name$else$$formation$$endif$
+% head/foot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[automark,pagestyleset=standard,markcase=used]{scrlayer-scrpage}
+\makeatletter
+\setkomafont{pageheadfoot}{\normalfont\sffamily\footnotesize}
+%\setkomafont{ohead}{\bfseries}
+$if(formation)$
+\ofoot{$if(formation.short)$$formation.short$
+$else$$if(formation.footer)$$formation.footer$
+$else$$if(formation.name)$$formation.name$$else$$formation$$endif$
 $endif$
 $endif$}
-\renewcommand{\headrulewidth}{2pt}
-\renewcommand{\footrulewidth}{1pt}
-\setlength{\headheight}{15pt}
+$endif$
+\ifoot{\textcolor{gray!80}{\textcopyright \the\year, \@author$if(institute)$, $institute$$endif$, \faIcon[solid]{creative-commons-by}}}
 \makeatother
 
+% Set title page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$if(titlehead)$\titlehead{$titlehead$}$endif$
+$if(titlegraphic)$
+\titlegraphic{\includegraphics{$titlegraphic$}}
+$endif$
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
 \subtitle{$subtitle$}
 $endif$
-\author{
-$if(author/allbutlast)$
-$for(by-author/allbutlast)$$it.name.literal$$sep$,~$endfor$
-and~$by-author/last$
-$else$
-$for(by-author)$$it.name.literal$$endfor$%
+$if(subject)$\subject{$subject$}
+$else$$if(book.genre)$\subject{$book.genre$}$endif$
 $endif$
+
+\author{%
+$if(author/allbutlast)$%
+$for(by-author/allbutlast)$${author.tex() }$sep$\and~$endfor$%
+\and~${ by-author/last:author.tex() }%
+$else$$for(by-author)$${ author.tex() }$endfor$$endif$%
 }
+$if(uppertitleback)$
+\uppertitleback{uppertitleback}
+$endif$
+$if(lowertitleback)$
+\lowertitleback{lowertitleback}
+$else$
+\makeatletter
+\lowertitleback{\textcopyright \the\year, \@author$if(institute)$, $institute$$endif$, \faIcon[solid]{creative-commons-by}}
+\makeatother
+$endif$
