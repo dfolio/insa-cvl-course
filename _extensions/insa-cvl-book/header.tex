@@ -27,17 +27,54 @@
 % itemize/enumerate%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{enumitem}
 \setlist{noitemsep,nosep,leftmargin=*}
-\setlist[1]{labelindent=\parindent,topsep=-5pt,partopsep=0pt} % < Usually a good idea
+\setlist[1]{labelindent=\parindent,topsep=-.5em,partopsep=0pt} % < Usually a good idea
 \setlist[itemize,1]{label={\relsize{-2}\faIcon[regular]{square}}}
 \setlist[itemize,2]{label={\relsize{-3}\faIcon[regular]{circle}}}
 \setlist[itemize,3]{label={\relsize{-2}\faIcon[solid]{chevron-right}}}
-\setlist[description,1]{style=nextline,font=\smaller,topsep=0.125\baselineskip,parsep=0.5\baselineskip,}
+\setlist[description]{font=\smaller,topsep=0\baselineskip,parsep=0.5\baselineskip,}
+\setlist[description,1]{style=nextline, leftmargin=1em}
 
 
 % Theorem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsthm}
-\newtheorem{criteria}{Critère}[chapter]
-
+\newtheoremstyle{plain}          % name
+    {.5em}                       % Space above
+    {.5em}                       % Space below
+    {\itshape}                   % Body font
+    {}                           % Indent amount
+    {\sffamily\scshape\bfseries} % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+\newtheoremstyle{definition} % name
+    {.25em}                      % Space above
+    {-.5em}                      % Space below
+    {}                           % Body font
+    {}                           % Indent amount
+    {\sffamily\scshape}          % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+\newtheoremstyle{remark} % name
+    {.25em}                      % Space above
+    {-.5em}                      % Space below
+    {\color{black!80}}           % Body font
+    {}                           % Indent amount
+    {\smaller\sffamily\color{black!80}}          % Theorem head font
+    {:}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+\newtheoremstyle{criteria}          % name
+    {.25em}                       % Space above
+    {.25em}                       % Space below
+    {\itshape}                   % Body font
+    {}                           % Indent amount
+    {\smaller\sffamily\scshape\bfseries} % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+\theoremstyle{criteria} 
+\newtheorem{criteria}{Criterion}[chapter]
 % chapter  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand\thechapter{\@Roman\c@chapter}
 %\RedeclareSectionCommand[style=section,indent=0pt,beforeskip=-2\baselineskip]{chapter}
@@ -69,10 +106,10 @@
 
 \RedeclareSectionCommand[afterindent=false,beforeskip=0pt]{chapter}
 \RedeclareSectionCommand[afterindent=false,beforeskip=0.5\baselineskip,afterskip=0.25\baselineskip]{section}
-\RedeclareSectionCommand[afterindent=false,beforeskip=0.25\baselineskip,afterskip=0.2\baselineskip]{subsection}
-\RedeclareSectionCommand[afterindent=false]{subsubsection}
-\RedeclareSectionCommand[afterindent=false]{paragraph}
-\RedeclareSectionCommand[afterindent=false,font=\normalfont\itshape]{subparagraph}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.25\baselineskip,afterskip=0.15\baselineskip]{subsection}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.2\baselineskip,afterskip=0.05\baselineskip]{subsubsection}
+\RedeclareSectionCommand[afterindent=false,beforeskip=0.1\baselineskip,]{paragraph}
+\RedeclareSectionCommand[afterindent=false,font=\normalfont\itshape,beforeskip=0.1\baselineskip]{subparagraph}
 
 % Figure  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\topfraction}{.85}
@@ -83,6 +120,11 @@
 \setcounter{bottomnumber}{3}
 \setcounter{totalnumber}{4}
 
+
+\setlength\abovedisplayskip{0.5ex}%
+\setlength\belowdisplayskip{0.5ex}%
+\setlength\abovedisplayshortskip{0pt}%
+\setlength\belowdisplayshortskip{3pt}%
 % longtable patch %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \def\LT@start{%

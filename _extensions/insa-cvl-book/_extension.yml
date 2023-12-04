@@ -51,7 +51,6 @@ contributes:
         - partials/before-body.tex
       header-includes: |
         \usepackage{booktabs}
-        \usepackage{physics}
         \usepackage{siunitx}
         \usepackage{relsize}
         \usepackage[version=4]{mhchem}
