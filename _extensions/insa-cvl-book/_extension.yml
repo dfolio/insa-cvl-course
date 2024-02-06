@@ -22,7 +22,7 @@ contributes:
         fig-title: Fig.
         fig-prefix: Fig.
       cite-method: citeproc
-      csl: ieee
+      csl: _extensions/dfolio/insa-cvl-book/ieee.csl
       #cite-method: biblatex
       link-citations: true
       execute:
@@ -49,8 +49,3 @@ contributes:
         - partials/title.tex
         - partials/author.tex
         - partials/before-body.tex
-      header-includes: |
-        \usepackage{booktabs}
-        \usepackage{relsize}
-        \usepackage[version=4]{mhchem}
-        \usepackage[]{fontawesome5}
