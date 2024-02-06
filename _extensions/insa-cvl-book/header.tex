@@ -1,4 +1,8 @@
 %
+\usepackage{booktabs}
+\usepackage{relsize}
+\usepackage[version=4]{mhchem}
+\usepackage[]{fontawesome5}
 \usepackage{physics}
 \DeclareMathOperator{\arcosh}{arcosh}
 \DeclareMathOperator{\arsinh}{arsinh}
@@ -14,7 +18,7 @@
 \newenvironment{cols}[1][]{}{}
 \let\columns\cols
 \let\endcolumns\endcols
-\newenvironment{col}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\newenvironment{col}[2][]{\begin{minipage}[#1]{#2}\ignorespaces}{%
 \end{minipage}
 \ifhmode\unskip\fi
 \aftergroup\useignorespacesandallpars}
@@ -83,8 +87,18 @@
     {}  % Theorem head spec (can be left empty, meaning ‘normal’)
 \theoremstyle{criteria} 
 \newtheorem{criteria}{Criterion}[chapter]
+
+
+% part  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\addparttocentry}[2]{%
+  \addtocentrydefault{part}{\partname\nobreakspace #1}{#2}%
+}
+
+\RedeclareSectionCommand[tocnumwidth=6em]{part}
 % chapter  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand\thechapter{\@Roman\c@chapter}
+\RedeclareSectionCommand[tocnumwidth=2.5em]{chapter}
+\RedeclareSectionCommand[tocnumwidth=3em]{section}
+\renewcommand\thechapter{{\rmfamily\@Roman\c@chapter}}
 %\RedeclareSectionCommand[style=section,indent=0pt,beforeskip=-2\baselineskip]{chapter}
 \renewcommand*{\raggedchapter}{\raggedleft}
 %\setkomafont{chapter}{\normalfont\sffamily\bfseries\scshape}
@@ -202,3 +216,6 @@
     \copy\LT@head\nobreak
   \fi}
 \makeatother
+
+\providecommand{\vv}[1]{\overrightarrow{#1}}
+\providecommand{\ee}{\mathrm{e}}
