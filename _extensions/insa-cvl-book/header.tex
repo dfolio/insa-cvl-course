@@ -1,5 +1,6 @@
 %
 \usepackage{booktabs}
+\usepackage{colortbl}
 \usepackage{relsize}
 \usepackage[version=4]{mhchem}
 \usepackage[]{fontawesome5}
@@ -46,7 +47,6 @@
 \setlist[description]{font=\smaller,topsep=0\baselineskip,parsep=0.5\baselineskip,}
 \setlist[description,1]{style=nextline, leftmargin=1em}
 
-
 % Theorem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsthm}
 \newtheoremstyle{plain}          % name
@@ -76,19 +76,6 @@
     {:}                          % Punctuation after theorem head
     {.5em}                       % Space after theorem head
     {}  % Theorem head spec (can be left empty, meaning ‘normal’)
-\newtheoremstyle{criteria}          % name
-    {.25em}                       % Space above
-    {.25em}                       % Space below
-    {\itshape}                   % Body font
-    {}                           % Indent amount
-    {\smaller\sffamily\scshape\bfseries} % Theorem head font
-    {.}                          % Punctuation after theorem head
-    {.5em}                       % Space after theorem head
-    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
-\theoremstyle{criteria} 
-\newtheorem{criteria}{Criterion}[chapter]
-
-
 % part  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand*{\addparttocentry}[2]{%
   \addtocentrydefault{part}{\partname\nobreakspace #1}{#2}%
@@ -141,7 +128,6 @@
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{3}
 \setcounter{totalnumber}{4}
-
 
 \setlength\abovedisplayskip{0.5ex}%
 \setlength\belowdisplayskip{0.5ex}%
@@ -216,6 +202,16 @@
     \copy\LT@head\nobreak
   \fi}
 \makeatother
-
+% Miscellaneous commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginDocument{%
 \providecommand{\vv}[1]{\overrightarrow{#1}}
 \providecommand{\ee}{\mathrm{e}}
+\providecolor{alertext}{HTML}{E32518}
+\providecommand{\alert}[1]{\textcolor{alertext}{\textbf{#1}}}
+
+\providecommand{\IR}{\mathbb{R}}
+\providecommand{\II}{\mathbb{I}}
+
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
+}
